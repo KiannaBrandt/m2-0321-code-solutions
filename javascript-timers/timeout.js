@@ -1,5 +1,5 @@
 function helloThere() {
-  document.querySelector('h1').innerHTML = 'Hello There';
+  document.querySelector('h1').textContent = 'Hello There';
 };
 
 var timeoutID;
