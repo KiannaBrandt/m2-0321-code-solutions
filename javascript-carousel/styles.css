@@ -1,0 +1,23 @@
+.container {
+  margin: auto 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+i {
+  margin: 0.5em;
+  cursor: pointer;
+}
+
+.arrow {
+  font-size: 2em;
+  margin: 5em;
+}
+
+.hide {
+  display: none
+}
