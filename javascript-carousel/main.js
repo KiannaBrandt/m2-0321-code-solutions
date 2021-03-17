@@ -1,4 +1,4 @@
-var $img = document.querySelectorAll('img');
+var $carouselSlide = document.querySelectorAll('.carousel-slide');
 var $leftArrow = document.querySelector('.fa-chevron-left');
 var $rightArrow = document.querySelector('.fa-chevron-right');
 var $circle = document.querySelectorAll('.fa-circle');
@@ -15,16 +15,16 @@ function stopInterval() {
 }
 
 function carousel() {
-  for (var i = 0; i < $img.length; i++) {
-    if ($img[i].className === 'view') {
-      $img[i].className = 'hide';
-      $circle[i].className = 'far fa-circle';
-      if (i !== $img.length - 1) {
-        $img[i += 1].className = 'view';
-        $circle[i].className = 'fas fa-circle';
+  for (var i = 0; i < $carouselSlide.length; i++) {
+    if ($carouselSlide[i].classList[0] === 'view') {
+      $carouselSlide[i].classList.replace("view", "hide");
+      $circle[i].classList.replace("fas", "far");
+      if (i !== $carouselSlide.length - 1) {
+        $carouselSlide[i += 1].classList.replace("hide", "view");
+        $circle[i].classList.replace("far", "fas");
       } else {
-        $img[0].className = 'view';
-        $circle[0].className = 'fas fa-circle';
+        $carouselSlide[0].classList.replace("hide", "view");
+        $circle[0].classList.replace("far", "fas");
       };
     };
   };
@@ -32,16 +32,16 @@ function carousel() {
 
 function left(event) {
   stopInterval();
-  for (var i = 0; i < $img.length; i++) {
-    if ($img[i].className === 'view') {
-      $img[i].className = 'hide';
-      $circle[i].className = 'far fa-circle';
+  for (var i = 0; i < $carouselSlide.length; i++) {
+    if ($carouselSlide[i].classList[0] === 'view') {
+      $carouselSlide[i].classList.replace("view", "hide");
+      $circle[i].classList.replace("fas", "far");
       if (i !== 0) {
-        $img[i -= 1].className = 'view';
-        $circle[i].className = 'fas fa-circle';
+        $carouselSlide[i -= 1].classList.replace("hide", "view");
+        $circle[i].classList.replace("far", "fas");
       } else {
-        $img[$img.length - 1].className = 'view';
-        $circle[$img.length - 1].className = 'fas fa-circle';
+        $carouselSlide[$carouselSlide.length - 1].classList.replace("hide", "view");
+        $circle[$carouselSlide.length - 1].classList.replace("far", "fas");
         break;
       };
     };
@@ -51,16 +51,16 @@ function left(event) {
 
 function right(event) {
   stopInterval();
-  for (var i = 0; i < $img.length; i++) {
-    if ($img[i].className === 'view') {
-      $img[i].className = 'hide';
-      $circle[i].className = 'far fa-circle';
-      if (i !== $img.length - 1) {
-        $img[i += 1].className = 'view';
-        $circle[i].className = 'fas fa-circle';
+  for (var i = 0; i < $carouselSlide.length; i++) {
+    if ($carouselSlide[i].classList[0] === 'view') {
+      $carouselSlide[i].classList.replace("view", "hide");
+      $circle[i].classList.replace("fas", "far");
+      if (i !== $carouselSlide.length - 1) {
+        $carouselSlide[i += 1].classList.replace("hide", "view");
+        $circle[i].classList.replace("far", "fas");
       } else {
-        $img[0].className = 'view';
-        $circle[0].className = 'fas fa-circle';
+        $carouselSlide[0].classList.replace("hide", "view")
+        $circle[0].classList.replace("far", "fas");
       };
     };
   };
@@ -69,13 +69,13 @@ function right(event) {
 
 function progressClick(event) {
   stopInterval();
-  if (event.target && event.target.nodeName === 'I') {
-    for (var i = 0; i < $img.length; i++) {
-      if (event.target.getAttribute('data-view') === $img[i].getAttribute('data-view')) {
-        $img[i].className = 'view';
+  if (event.target.classList[1] === 'fa-circle') {
+    for (var i = 0; i < $carouselSlide.length; i++) {
+      if (event.target.getAttribute('data-view') === $carouselSlide[i].getAttribute('data-view')) {
+        $carouselSlide[i].className = 'view';
         $circle[i].className = 'fas fa-circle';
       } else {
-        $img[i].className = 'hide';
+        $carouselSlide[i].className = 'hide';
         $circle[i].className = 'far fa-circle';
       };
     };
