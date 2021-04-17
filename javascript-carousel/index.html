@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Carousel</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <i class="fas fa-chevron-left arrow"></i>
+      <img class = "view carousel-slide" src="images/001.png" alt="Bulbasaur" data-view="Bulbasaur">
+      <img class="hide carousel-slide" src="images/004.png" alt="Charmander" data-view="Charmander">
+      <img class="hide carousel-slide" src="images/007.png" alt="Squirtle" data-view="Squirtle">
+      <img class="hide carousel-slide" src="images/025.png" alt="Pikachu" data-view="Pikachu">
+      <img class="hide carousel-slide" src="images/039.png" alt="Jigglypuff" data-view="Jigglypuff">
+      <i class="fas fa-chevron-right arrow"></i>
+    </div>
+    <div class="row progress">
+      <i class="fas fa-circle" data-view="Bulbasaur"></i>
+      <i class="far fa-circle" data-view="Charmander"></i>
+      <i class="far fa-circle" data-view="Squirtle"></i>
+      <i class="far fa-circle" data-view="Pikachu"></i>
+      <i class="far fa-circle" data-view="Jigglypuff"></i>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
