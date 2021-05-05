@@ -28,13 +28,17 @@ app.get('/api/grades', function (req, res) {
     gradesArray.push(grades[property]);
   };
   res.json(gradesArray)
-})
+});
 
 app.delete('/api/grades/:id', function (req, res) {
-  var gradesId = req.params.id
-  delete grades[gradesId];
-  res.sendStatus(204);
-})
+  var gradesId = req.params.id;
+  if (grades[gradesId] !== undefined) {
+    delete grades[gradesId];
+    res.sendStatus(204);
+  } else {
+    res.sendStatus(404);
+  };
+});
 
 app.listen(3000, () => {
   console.log('Listening on port 3000');
