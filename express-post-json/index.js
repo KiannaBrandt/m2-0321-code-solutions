@@ -11,18 +11,22 @@ app.get('/api/grades', function (req, res) {
     gradesArray.push(grades[property]);
   };
   res.json(gradesArray);
-})
-
-app.listen(3000, () => {
-  console.log('Listening on port 3000');
 });
 
-app.use(express.json())
+app.use(express.json());
 
 app.post('/api/grades', function (req, res) {
   var newGrades = req.body;
-  newGrades.id = nextId;
-  grades[nextId] = newGrades;
-  nextId++;
-  res.status(201).json(newGrades);
+  if (newGrades['name'] && newGrades['course'] && newGrades['score'] !== undefined) {
+    newGrades.id = nextId;
+    grades[nextId] = newGrades;
+    nextId++;
+    res.sendStatus(201);
+  } else {
+    res.sendStatus(400);
+  };
+});
+
+app.listen(3000, () => {
+  console.log('Listening on port 3000');
 });
