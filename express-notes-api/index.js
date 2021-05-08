@@ -78,7 +78,6 @@ app.put('/api/notes/:id', function (req, res) {
       if (data.notes[notesId] !== undefined) {
         if (data.nextId !== undefined) {
           data.notes[notesId].content = noteContent.content;
-          data.notes[notesId].id = notesId;
           res.status(200);
           res.json(data.notes[notesId]);
         } else {
