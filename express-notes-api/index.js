@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 
 const data = require('./data.json');
+const fs = require('fs');
 
 app.get('/api/notes', function (req, res) {
   var notesArray = [];
@@ -16,7 +17,7 @@ app.use(express.json());
 
 app.get('/api/notes/:id', function (req, res) {
   var notesId = req.params.id;
-  if (Math.sign(notesId) === 1) {
+  if ((Math.sign(notesId) === 1) && (Number.isInteger(parseInt(notesId)) === true)) {
     if (data.notes[notesId] !== undefined) {
       res.status(200);
       res.json(data.notes[notesId]);
@@ -39,6 +40,12 @@ app.post('/api/notes', function (req,res) {
       res.status(201);
       res.json(data.notes[data.nextId]);
       data.nextId++;
+      fs.readFile('data.json', data, operation);
+      function operation() {
+        fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
+          if (err) throw err;
+        });
+      };
     } else {
       res.status(500);
       res.json({"error": "An unexpected error occurred."});
@@ -51,12 +58,17 @@ app.post('/api/notes', function (req,res) {
 
 app.delete('/api/notes/:id', function (req, res) {
   var notesId = req.params.id;
-  if (Math.sign(notesId) === 1) {
+  if ((Math.sign(notesId) === 1) && (Number.isInteger(parseInt(notesId)) === true)) {
     if (data.notes[notesId] !== undefined) {
-      if (data.nextId !== undefined) {
-        res.sendStatus(204);
-        delete data.notes[notesId];
-      } else {
+      res.sendStatus(204);
+      delete data.notes[notesId];
+      fs.readFile('data.json', data, operation);
+      function operation() {
+        fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
+          if (err) throw err;
+        });
+      };
+      if (data.nextId === undefined) {
         res.status(500);
         res.json({ "error": "An unexpected error occurred." });
       };
@@ -73,13 +85,19 @@ app.delete('/api/notes/:id', function (req, res) {
 app.put('/api/notes/:id', function (req, res) {
   var notesId = req.params.id;
   var noteContent = req.body;
-  if (Math.sign(notesId) === 1) {
+  if ((Math.sign(notesId) === 1) && (Number.isInteger(parseInt(notesId)) === true)) {
     if (noteContent.content !== undefined) {
       if (data.notes[notesId] !== undefined) {
         if (data.nextId !== undefined) {
           data.notes[notesId].content = noteContent.content;
           res.status(200);
           res.json(data.notes[notesId]);
+          fs.readFile('data.json', data, operation);
+          function operation() {
+            fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
+              if (err) throw err;
+            });
+          };
         } else {
           res.status(500);
           res.json({ "error": "An unexpected error occurred." });
