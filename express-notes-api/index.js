@@ -37,18 +37,19 @@ app.post('/api/notes', function (req,res) {
     if (data.nextId !== undefined) {
       data.notes[data.nextId] = noteContent;
       data.notes[data.nextId].id = data.nextId;
-      res.status(201);
       res.json(data.notes[data.nextId]);
       data.nextId++;
       fs.readFile('data.json', data, operation);
       function operation() {
         fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
-          if (err) throw err;
+          if (err) {
+            res.status(500);
+            res.json({ "error": "An unexpected error occurred." });
+          } else {
+            res.status(201);
+          };
         });
       };
-    } else {
-      res.status(500);
-      res.json({"error": "An unexpected error occurred."});
     };
   } else {
     res.status(400);
@@ -60,17 +61,17 @@ app.delete('/api/notes/:id', function (req, res) {
   var notesId = req.params.id;
   if ((Math.sign(notesId) === 1) && (Number.isInteger(parseInt(notesId)) === true)) {
     if (data.notes[notesId] !== undefined) {
-      res.sendStatus(204);
       delete data.notes[notesId];
       fs.readFile('data.json', data, operation);
       function operation() {
         fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
-          if (err) throw err;
+          if (err) {
+            res.status(500);
+            res.json({ "error": "An unexpected error occurred." });
+          } else {
+            res.sendStatus(204);
+          };
         });
-      };
-      if (data.nextId === undefined) {
-        res.status(500);
-        res.json({ "error": "An unexpected error occurred." });
       };
     } else {
       res.status(404);
@@ -88,20 +89,19 @@ app.put('/api/notes/:id', function (req, res) {
   if ((Math.sign(notesId) === 1) && (Number.isInteger(parseInt(notesId)) === true)) {
     if (noteContent.content !== undefined) {
       if (data.notes[notesId] !== undefined) {
-        if (data.nextId !== undefined) {
-          data.notes[notesId].content = noteContent.content;
-          res.status(200);
-          res.json(data.notes[notesId]);
+        data.notes[notesId].content = noteContent.content;
+        res.json(data.notes[notesId]);
           fs.readFile('data.json', data, operation);
           function operation() {
             fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
-              if (err) throw err;
+              if (err) {
+                res.status(500);
+                res.json({ "error": "An unexpected error occurred." });
+              } else {
+                res.status(200);
+              };
             });
           };
-        } else {
-          res.status(500);
-          res.json({ "error": "An unexpected error occurred." });
-        };
       } else {
         res.status(404);
         res.json({ "error": `cannot find note with id ${notesId}` });
