@@ -37,7 +37,6 @@ app.post('/api/notes', function (req,res) {
     if (data.nextId !== undefined) {
       data.notes[data.nextId] = noteContent;
       data.notes[data.nextId].id = data.nextId;
-      res.json(data.notes[data.nextId]);
       data.nextId++;
       fs.readFile('data.json', data, operation);
       function operation() {
@@ -47,6 +46,7 @@ app.post('/api/notes', function (req,res) {
             res.json({ "error": "An unexpected error occurred." });
           } else {
             res.status(201);
+            res.json(data.notes[data.nextId]);
           };
         });
       };
@@ -90,7 +90,6 @@ app.put('/api/notes/:id', function (req, res) {
     if (noteContent.content !== undefined) {
       if (data.notes[notesId] !== undefined) {
         data.notes[notesId].content = noteContent.content;
-        res.json(data.notes[notesId]);
           fs.readFile('data.json', data, operation);
           function operation() {
             fs.writeFile('data.json', JSON.stringify(data, null, 2), (err) => {
@@ -99,6 +98,7 @@ app.put('/api/notes/:id', function (req, res) {
                 res.json({ "error": "An unexpected error occurred." });
               } else {
                 res.status(200);
+                res.json(data.notes[notesId]);
               };
             });
           };
