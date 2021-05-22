@@ -52,9 +52,9 @@ app.post('/api/grades', (req, res, next) => {
     return;
   };
 
-  if ((req.body.score <= 0) || (req.body.score >= 101)) {
+  if ((!Number.isInteger(parseFloat(req.body.score))) || (req.body.score <= 0) || (req.body.score >= 101)) {
     res.status(400).json({
-      error: 'score must be between 1 and 100'
+      error: 'score must be an integer between 1 and 100'
     });
     return;
   };
@@ -86,7 +86,7 @@ app.post('/api/grades', (req, res, next) => {
 
 app.put('/api/grades/:gradeId', (req, res, next) => {
   const gradeId = parseInt(req.params.gradeId, 10);
-  if (!Number.isInteger(gradeId) || gradeId <= 0) {
+  if (!Number.isInteger(parseFloat(req.params.gradeId)) || gradeId <= 0) {
     res.status(400).json({
       error: '"gradeId" must be a positive integer'
     });
@@ -113,9 +113,9 @@ app.put('/api/grades/:gradeId', (req, res, next) => {
     return;
   };
 
-  if ((req.body.score <= 0) || (req.body.score >= 101)) {
+  if ((!Number.isInteger(parseFloat(req.body.score))) || (req.body.score <= 0) || (req.body.score >= 101)) {
     res.status(400).json({
-      error: 'score must be between 1 and 100'
+      error: 'score must be an integer between 1 and 100'
     });
     return;
   };
@@ -155,7 +155,7 @@ app.put('/api/grades/:gradeId', (req, res, next) => {
 
 app.delete('/api/grades/:gradeId', (req, res, next) => {
   const gradeId = parseInt(req.params.gradeId, 10);
-  if (!Number.isInteger(gradeId) || gradeId <= 0) {
+  if (!Number.isInteger(parseFloat(req.params.gradeId)) || gradeId <= 0) {
     res.status(400).json({
       error: '"gradeId" must be a positive integer'
     });
@@ -178,7 +178,6 @@ app.delete('/api/grades/:gradeId', (req, res, next) => {
         });
       } else {
         res.status(204);
-        res.json(grade);
       }
     })
     .catch(err => {
